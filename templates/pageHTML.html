@@ -1,0 +1,91 @@
+{{>header}}
+
+  {{>id_line}}
+  <h1><a href="{{path}}">{{title}}</a></h1>
+
+  <div id="tools" class="both"></div>
+
+  <div id="wiki" class="content">
+  {{#isticket}}
+   
+   <form id="keyline" class="keyline exist" onclick='keyliner()' ><!-- use form is easier than in-place-editor ? exept: copy -->
+     <input type="hidden" name="_rev" value="{{_rev}}">
+     <input type="hidden" name="markdown" value="{{markdown}}"><!-- to get new compltet versions markdown has to piped throug  -->
+     <input type="hidden" name="title" value="{{title}}">
+    {{>key_line}}
+   </form>
+  {{/isticket}}
+   <div class="wiki both">{{{body}}}</div>
+   <p class="pagetools">
+    <a href="#/edit">Edit this page</a>
+    <!--a href="#/history" class="wiki">History</a>
+    <a href="#/upload">Upload File</a -->
+    <a href="/_utils/document.html?wicket/{{_id}}">Futon</a><!-- TODO -->
+   </p>
+   <p class="editinfo">von {{#edit_by}} {{name}} {{/edit_by}} um <span class="date">{{edit_at}}</span></p>
+   <div class="new_page follow evently both" >
+    <button>new follow page<button>
+   </div>
+  </div>
+ 
+
+   
+    {{#has_atts}}
+    <div id="files">
+      <p>Files attached to <em>{{title}}</em>:</p>
+      <ul>
+        {{#atts}}
+          <dt><a href="{{uri}}">{{name}}</a> ({{type}})</li>
+        {{/atts}}
+      </ul>
+    </div>
+   {{/has_atts}}
+
+ </body>
+ <script src="../script/myloader.js"></script>
+ <script src="/_utils/script/base64.js"></script>
+ <script src="/_utils/script/jquery.form.js"></script>
+ <script src="../script/wicketboard.js"></script>
+ <script src="../script/wicketpresets.js"></script>
+ <script src="../script/form2object.js"></script><!-- http://code.google.com/p/form2js/ -->
+ 
+ <script type="text/javascript" charset="utf-8">
+    opts.ddoc = {{{ddoc}}};
+    $.couch.app(function(app) {
+      $("#wiki").evently("wiki", app);
+      
+      $("#tools").evently("tools", app);
+
+      $$("#wiki").docid = {{docid}};
+      $$("#wiki").title = {{title_json}};
+      $$("#wiki").rev = "{{rev}}";
+      //for keyline
+      $$("#wiki").type = "{{{type}}}";
+      $$("#wiki").prio = "{{{prio}}}";
+      $$("#wiki").state = "{{state}}"; 
+      $$("#wiki").punct = "{{{punct}}}";
+      $$("#wiki").queue = "{{{queue}}}";
+      $$("#wiki").user = "{{{user}}}";
+      $$("#wiki").ddate = "{{{ddate}}}";
+
+      $.pathbinder.begin("{{begin}}");
+    }, opts);
+
+function safekeyline() { // must be here: _id
+    var formData = form2object('keyline');
+    var formkeyline = JSON.stringify(formData, null, '\t');
+    $.ajax({
+        type: "PUT",
+        url: "../../../../{{_id}}" , //< TODO URL
+        data: formkeyline ,
+        success: function(msg){
+            var msgJSON = eval('(' + msg + ')'); 
+            $("input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
+            $("input").attr('readonly','readonly');
+            $("form.keyline .submit").hide('slow'); // shows "untouched"
+            // TODO if not logged in
+            }
+        });
+    };
+ </script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>{{pagetitle}} - {{site_title}} -</title>
+  <link rel="stylesheet" href="../../jquery.autocomplete.css" type="text/css">
+  <link rel="stylesheet" href="../../jquery-ui.css" type="text/css">
+  <link rel="stylesheet" href="../../dikid.css" type="text/css">
+  </head>
+ <body class="{{{type}}}">
+
+ <div id="header">
+  <span class="depot login">login</span>
+  <a href="/" id="logo">Dikid</a>
+  <ul class="menu">
+   <li>all open tickets: <a href="../list/alltickets">listed</a> <a href="../bunch/alltickets">bunched</a></li>
+   <li><a href="../register/queues/"></a></li>
+   <form>
+        <fieldset>
+         <legend>queues</legend>
+         <input type="text" class="queues autocomplete" name="queues" value="{{{thisqueues}}}" autocomplete="off" onFocus="this.select()" />
+        </fieldset>
+        <fieldset>
+         <legend>state</legend>
+         <input type="text" class="state autocomplete" name="state" value="{{{thisstate}}}" autocomplete="off" onFocus="this.select()" />
+        </fieldset>
+        <fieldset>
+         <legend>users</legend>
+         <input type="text" class="users autocomplete" name="users" value="{{{thisusers}}}" autocomplete="off" onFocus="this.select()" />
+        </fieldset>
+   </form>
+  </ul>
+ </div>
+ <span class="depot new newsheet" rel="header" >new sheet</span>
+ <span class="articledetailview" >
+  <span class="buncher" ></span>
+  <span class="prioer" ></span>
+  <span class="quer" ></span>
+  <span class="dater" ></span>
+ </span>

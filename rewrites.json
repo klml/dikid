@@ -1,0 +1,69 @@
+[
+  {
+    "from" : "",
+    "to" : "_show/redirect"
+  },
+  {
+    "from" : "js/*",
+    "to" : "js/*"
+  },
+  {
+    "from" : "style/*",
+    "to" : "style/*"
+  },
+  {
+    "from" : "images/*",
+    "to" : "images/*"
+  },
+  {
+    "from" : "vendor/*",
+    "to" : "vendor/*"
+  },
+  {
+    "from" : "/list/alltickets",
+    "to" : "_list/list/all-tickets",
+    "query" : {
+      "ascending" : true
+    }
+  },
+  {
+    "from" : "/blurb/alltickets",
+    "to" : "_list/blurb/all-tickets",
+    "query" : {
+      "ascending" : true
+    }
+  },
+  {
+    "from" : "/bunch/alltickets",
+    "to" : "_list/bunch/all-tickets",
+    "query" : {
+      "ascending" : true
+    }
+  },
+  { "from" : "/list/:title",
+    "to" : "_list/list/staplez",
+    "query" : { 
+     "startkey" : ":title",
+     "endkey" : ":title",
+     "ascending" : true,
+     "limit" : 100 
+    }
+   },
+  { "from" : "/blurb/:title",
+    "to" : "_list/blurb/staplez",
+    "query" : { 
+     "startkey" : ":title",
+     "endkey" : ":title",
+     "descending" : false,
+     "limit" : 100 
+    }
+   },
+  { "from" : "/bunch/:title",
+    "to" : "_list/bunch/staplez",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   }
+]

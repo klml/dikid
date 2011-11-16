@@ -1,0 +1,30 @@
+{{>header}}
+
+<!--
+  <h1><a href="{{path}}">{{pagetitle}}</a></h1>
+-->
+
+  {{#tickets}}
+   <div id="{{_id}}" class="sheet prio_{{{prio}}} state_{{{state}}} parent_{{hierarchy}}" >
+    {{>id_line}}
+    <h{{hierarchy}}>{{title}}</h{{hierarchy}}>
+    <a href='/dikid/_design/dikid/_rewrite/bunch/{{_id}}' >bunch</a>
+    <form class="key_line bunch" >
+     <input type="hidden" class="_id string" name="_id" value="{{_id}}" /><!-- TODO class vs name -->
+     <input type="hidden" class="_rev string" name="_rev" value="{{{_rev}}}" />
+     <input type="hidden" class="type string" name="type" value="{{{type}}}" />
+     <input type="hidden" class="title string" name="title" value="{{{title}}}" />
+     <input type="hidden" class="markdown string" name="markdown" value="{{{markdown}}}" />
+     <input type="hidden" class="initdate string" name="initdate" value="{{{initdate}}}" />
+     {{>key_line}}
+     <button name="safe" type="button" class="submit"  >Safe</button>
+    </form>
+    <span class="picknplace" rel="state ">archive</span>
+    <a href='/dikid/_design/dikid/_rewrite/bunch/{{parents}}' >parents</a>
+    <p class="description bunch">{{markdown}}</p><!-- TODO markdown -->
+
+    <span class="followup depot newsheet bunch" rel="{{_id}}" >followup</span>
+    <span class="toggler" >t</span>
+   </div>
+  {{/tickets}}  
+{{>footer}}

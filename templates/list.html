@@ -1,0 +1,33 @@
+{{>header}}
+
+  <h1><a href="{{path}}">{{pagetitle}}</a></h1>
+
+  <ul class="listview">
+  <li>
+   <input type="checkbox" name="all" >  
+   <strong>title</strong>
+   <a href='/dikid/_design/dikid/_rewrite/bunch/all' >all</a>
+    <span class="prio">prio</span>
+    <span class="punc">punct</span>
+    <span class="ddat">ddate</span>
+    <span class="stat">state</span>
+    <span class="queu">queues</span>
+    <span class="user">users</span>
+  </li>
+  {{#tickets}}
+   <li id="{{_id}}" class="prio_{{{prio}}} state_{{{state}}} parent_{{parentslength}}">
+     <input type="checkbox" name="bulk" >
+     <strong>{{title}}</strong>
+     <a href='/dikid/_design/dikid/_rewrite/bunch/{{_id}}' >{{_id}}</a>
+    
+    <span class="prio">{{prio}}</span>
+    <span class="punc">{{punct}}</span>
+    <span class="ddat">{{ddate}}</span>
+    <span class="stat">{{state}}</span>
+    <span class="queu">{{queues}}</span>
+    <span class="user">{{users}}</span>
+
+   </li>
+  {{/tickets}}
+  </ul>
+{{>footer}}

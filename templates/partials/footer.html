@@ -1,0 +1,31 @@
+  <div id="depot">
+   <div class="newsheet">
+    <form class="newsheet">
+     <input type="hidden" class="type string" name="type" value="ticket" autocomplete="off"/>
+     <input type="hidden" class="initdate string" name="initdate" value="" />
+     <fieldset>
+      <legend onclick="safenewsheet()" >Title</legend>
+      <input type="text" class="title string" name="title" value="title" autocomplete="off"/>
+      <input type="text" class="_id" name="_id" value="id" autocomplete="off"/>
+     </fieldset>
+     {{>key_line}}
+     <textarea name="markdown" class="string" ></textarea><br />
+     <button name="safe" type="button" class="submit" rel="klml" >Safe</button>
+    </form>
+   </div>
+   <div class="login">
+    <div class="login">User: <input> Pass:<input></div>
+   </div>
+  </div>
+
+ </body>
+
+
+
+ <script src="../../jquery.min.js"></script>
+ <script src="../../jquery-ui.min.js"></script>
+ <script src="../../jquery.autocomplete.pack.js"></script>
+ <script src="../../dikid.js"></script>
+
+
+</html>
