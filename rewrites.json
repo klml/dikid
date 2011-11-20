@@ -27,13 +27,6 @@
     }
   },
   {
-    "from" : "/blurb/alltickets",
-    "to" : "_list/blurb/all-tickets",
-    "query" : {
-      "ascending" : true
-    }
-  },
-  {
     "from" : "/bunch/alltickets",
     "to" : "_list/bunch/all-tickets",
     "query" : {
@@ -49,20 +42,19 @@
      "limit" : 100 
     }
    },
-  { "from" : "/blurb/:title",
-    "to" : "_list/blurb/staplez",
-    "query" : { 
-     "startkey" : ":title",
-     "endkey" : ":title",
-     "descending" : false,
-     "limit" : 100 
-    }
-   },
   { "from" : "/bunch/:title",
     "to" : "_list/bunch/staplez",
     "query" : {
      "startkey" : [":title"],
      "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/queue/:title",
+    "to" : "_list/queues/staplez",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title"],
      "limit" : 100 
     }
    }

@@ -5,10 +5,10 @@ $("form").click(function() {
     preparesheet() ;
 });
 $(".depot").click(function() { // the last class from calling element will fetched from #depot
-    var lastclass = $(this).attr("class").split(" ").pop() ;
+    var lastclass = $(this).attr("class").split(" ").pop() ; // TODO lastone is not defined 
     var depot = $("#depot ." + lastclass).html();
-    $(this).replaceWith(depot);
-    
+    $(this).after(depot);
+    $(this).toggle();
 });
 $(".followup").click(function() { // TODO together with $(".depot").click ?
     keycopy( $(this).attr("rel") ); // TODO this and parnets
@@ -19,20 +19,44 @@ $(".new").click(function() {
     initdate( $(this).attr("rel") ) ;
     preparesheet() ;
 });
-$(".picknplace").click(function() { // the last class from calling element will fetched from #depot
-    alert(  );
-
-$(this).closest('input ').val( $(this).html() );
-
-//~ <span class=".picknplace" rel="state ">archive</span> selectable
+$(".articledetailview span.hide").click(function() {
+ $( '.sheet' ).addClass('collapsed');
+ $(this).parent().addClass('active') ;
 });
-$(".articledetailview span.buncher").click(function() {
-$( '.sheet .bunch' ).toggle();
- $(this).toggleClass("active") ;
+$(".articledetailview span.show").click(function() {
+ $( '.sheet' ).removeClass('collapsed');
+ $(this).parent().removeClass('active') ;
 });
 $(".sheet .toggler").click(function() {
-  $(this).parent().find('.bunch').toggle();
+ $(this).parent().toggleClass('collapsed') ;
 });
+
+$(".picknrun").click(function() {
+ var target = $(this).attr("rel") ;
+ $(this).parent().find('input.' + target).val( $(this).html() );
+ safesheet( $(this) );
+});
+// linker TODO --> function ?
+$('.linker > b').click(function() {
+ $(this).next('b').toggle();
+ var linkcontainer = $(this)  ;
+
+ var parents = $(this).parentsUntil('.key_line').find('input').val()  ;  // TODO must with prev TODO
+ parents = parents.split(",");  // this would be so nice with the couchsideeJSON array, but i dont have it
+
+ $(parents).each(function(index, parent){
+  var a = $("<a />", { href: parent, html: parent });
+  $(linkcontainer).after(a) ;
+ });
+ $(this).toggle();
+});
+$('.linker > b + b').click(function() {
+ $(this).toggle();
+ $(this).parent().find('b').toggle();  //  less !!! TODO
+ $(this).parent().find('a').remove();
+});
+
+
 
 
 function preparesheet() {
@@ -97,19 +121,23 @@ function preparesheet() {
         scrollHeight: 280,
     });
     $('textarea').focus(); // TODO
+    $('.x').click(function() {
+        $(this).parents('.sheet').find('.depot').toggle();
+        $(this).parent().remove();
+    });
 }
 
-function safesheet(safeid) {
+function safesheet(thiscaller) {
 
         var newrev = new Array();
         // json.org string
-        $(safeid).parent().find('.string').each(function(){ // TODO .serializeArray() trim;
+        $(thiscaller).parents('.sheet').find('.string').each(function(){ // TODO .serializeArray() trim;
           newrev.push( '"' + $(this).attr( 'name' ) + '" : "' + $(this).val() + '"');
           return newrev;
         });
        
         // json.org array
-        $(safeid).parent().find('.array').each(function(){
+        $(thiscaller).parents('.sheet').find('.array').each(function(){
             var value = $(this).val() ;
             if ( value == 0 ) { return newrev; } ; // TODO come on
             value = value.replace(/,/g, '","'); // eveliness? bttter JSON.parse() TODO
@@ -117,7 +145,8 @@ function safesheet(safeid) {
             return newrev;
         });
 
-        var _id = $(safeid).parent().find('._id').val()
+        var _id = $(thiscaller).parents('.sheet').find('._id').val() ; 
+
         $.ajax({
             type: "PUT",
             url: "../../../../" + _id , //< TODO URL
@@ -127,7 +156,11 @@ function safesheet(safeid) {
                 $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
                 $("input").attr('readonly','readonly');
                 $("form.keyline .submit").hide('slow'); // shows "untouched"
-                if ( $(safeid).parent().attr("class") == "newsheet") location.reload(); 
+                if ( 
+                    $(thiscaller).parent().attr("class") == "sheet newsheet" ||
+                    $(thiscaller).attr("class") == "picknrun"
+                ) location.reload(); 
+                
                 // TODO if not logged in
             }
         });
@@ -200,23 +233,21 @@ function keycopy(_id) { // TODO _id raus und this  parent() closest() und find()
     });
 
     // append for value? TODO
-    var parents = $('#' + _id + ' .newsheet input[name=parents]' ).val();
-    parents = parents.split(",");
-    var parents = $.merge([_id], parents);
-    var parents = parents.join(",");
-    $('#' + _id + ' .newsheet input[name=parents]' ).val(parents);
-    
-    
-    
-    
+    var parents = $('#' + _id + ' .newsheet input.parents' ).val();
+    if (parents == "") {
+        parents = _id ; 
+    } else {
+        parents = _id + ',' + parents ;         // TODO
+        //~ parents = parents.split(",");       // better?
+        //~ parents = $.merge([_id], parents);
+        //~ parents = parents.join(",");
+
+    };
+    $('#' + _id + ' .newsheet input.parents' ).val(parents);
 };  
-
-
 function initdate(_id) {
     $('#' + _id + ' .newsheet input[name=initdate]' ).val( new Date().getTime() );
 };  
-
-
 
 //~  nr2prio(value)"  TODO
 

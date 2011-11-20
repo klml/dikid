@@ -7,7 +7,6 @@
 
   <div id="wiki" class="content">
   {{#isticket}}
-   
    <form id="keyline" class="keyline exist" onclick='keyliner()' ><!-- use form is easier than in-place-editor ? exept: copy -->
      <input type="hidden" name="_rev" value="{{_rev}}">
      <input type="hidden" name="markdown" value="{{markdown}}"><!-- to get new compltet versions markdown has to piped throug  -->
@@ -20,16 +19,14 @@
     <a href="#/edit">Edit this page</a>
     <!--a href="#/history" class="wiki">History</a>
     <a href="#/upload">Upload File</a -->
-    <a href="/_utils/document.html?wicket/{{_id}}">Futon</a><!-- TODO -->
+    <a href="/_utils/document.html?wicket/{{_id}}">Futon</a><!-- TODO db name -->
    </p>
    <p class="editinfo">von {{#edit_by}} {{name}} {{/edit_by}} um <span class="date">{{edit_at}}</span></p>
    <div class="new_page follow evently both" >
     <button>new follow page<button>
    </div>
   </div>
- 
 
-   
     {{#has_atts}}
     <div id="files">
       <p>Files attached to <em>{{title}}</em>:</p>
