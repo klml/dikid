@@ -33,7 +33,9 @@ $(".sheet .toggler").click(function() {
 
 $(".picknrun").click(function() {
  var target = $(this).attr("rel") ;
- $(this).parent().find('input.' + target).val( $(this).html() );
+ var value = $(this).attr("name") ;
+
+ $(this).parent().find('input.' + target).val( value );
  safesheet( $(this) );
 });
 // linker TODO --> function ?

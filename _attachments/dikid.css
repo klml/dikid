@@ -86,7 +86,8 @@ max-width: 980px;
 }
 #header .login,
 #header ~ .newsheet,
-.x {
+.x,
+.picknrun.archive {
 float: right;
 }
 ul.menu {
@@ -133,7 +134,9 @@ font: small monospace;
 div#depot {
 display: none;
 }
-
+.picknrun.archive {
+color: #00263f;
+}
 /*listview*/
 
 ul.listview li {
@@ -249,7 +252,7 @@ font-size: 18px;
 
 
 
-textarea[name=markdown] 	{ width: 900px; line-height:21px; background-color: white; }
+textarea[name=markdown] 	{ width: 900px; height: 250px; line-height:21px; background-color: white; }
 
 .notion a[title="futon"] {
 border: 1px solid gray;

@@ -9,7 +9,6 @@
     {{>id_line}}
     <h{{hierarchy}}>{{title}}</h{{hierarchy}}>
     <div>
-     <span class="picknrun" rel="state" >✖</span>
      <form class="key_line" >
      <input type="hidden" class="_id string" name="_id" value="{{_id}}" /><!-- TODO class vs name -->
       <input type="hidden" class="_rev string" name="_rev" value="{{{_rev}}}" />
@@ -20,6 +19,7 @@
       {{>key_line}}
       <button name="safe" type="button" class="submit"  >Safe</button>
      </form>
+     <span class="picknrun archive" rel="state" name="archive">✖ archive this</span>
      <p class="description">{{markdown}}</p><!-- TODO markdown -->
 
      <span class="followup depot newsheet" rel="{{_id}}" >followup</span>
