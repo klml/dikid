@@ -1,11 +1,12 @@
 $(document).ready(function() {
+    preparesheet() ;
 });
-$("form").click(function() {
+$("form input").click(function() {
     $(this).find('input').removeAttr('readonly');
     preparesheet() ;
 });
-$(".depot").click(function() { // the last class from calling element will fetched from #depot
-    var lastclass = $(this).attr("class").split(" ").pop() ; // TODO lastone is not defined 
+$(".depot").click(function() { // the last class from calling element will fetched from #depot TODO lastone is not defined 
+    var lastclass = $(this).attr("class").split(" ").pop() ;
     var depot = $("#depot ." + lastclass).html();
     $(this).after(depot);
     $(this).toggle();
@@ -19,6 +20,7 @@ $(".new").click(function() {
     initdate( $(this).attr("rel") ) ;
     preparesheet() ;
 });
+
 $(".articledetailview span.hide").click(function() {
  $( '.sheet' ).addClass('collapsed');
  $(this).parent().addClass('active') ;
@@ -31,14 +33,15 @@ $(".sheet .toggler").click(function() {
  $(this).parent().toggleClass('collapsed') ;
 });
 
-$(".picknrun").click(function() {
+$(".picknrun").click(function() { 
  var target = $(this).attr("rel") ;
  var value = $(this).attr("name") ;
 
  $(this).parent().find('input.' + target).val( value );
  safesheet( $(this) );
 });
-// linker TODO --> function ?
+
+// linker TODO --> function ? value2link
 $('.linker > b').click(function() {
  $(this).next('b').toggle();
  var linkcontainer = $(this)  ;
@@ -58,22 +61,12 @@ $('.linker > b + b').click(function() {
  $(this).parent().find('a').remove();
 });
 
-
-
-
 function preparesheet() {
     $("form.newsheet textarea").keyup(function () {
         autofiller( $(this) );
     });
     $("form.newsheet input._id").change(function () {
         idcheck( $(this) ); 
-    });
-    $(".sheet > .key_line input").change(function () {
-        safesheet( $(this) ); // TODO höher 
-    });
-    $("button.submit").click(function() {
-        //~ idcheck( $(this) ); TODO
-        safesheet( $(this) );
     });
 
     $(".datepicker").datepicker({
@@ -127,27 +120,28 @@ function preparesheet() {
         $(this).parents('.sheet').find('.depot').toggle();
         $(this).parent().remove();
     });
-}
 
-function safesheet(thiscaller) {
 
-        var newrev = new Array();
+
+    $('form').submit(function() {
+
         // json.org string
-        $(thiscaller).parents('.sheet').find('.string').each(function(){ // TODO .serializeArray() trim;
+        var newrev = new Array();
+        $(this).find('input.string').each(function(){ // .serializeArray() will not work, dont need GET but JSON values   TODO trim;
           newrev.push( '"' + $(this).attr( 'name' ) + '" : "' + $(this).val() + '"');
-          return newrev;
+          return newrev ;
         });
-       
+
         // json.org array
-        $(thiscaller).parents('.sheet').find('.array').each(function(){
+        $(this).find('input.array').each(function(){
             var value = $(this).val() ;
             if ( value == 0 ) { return newrev; } ; // TODO come on
-            value = value.replace(/,/g, '","'); // eveliness? bttter JSON.parse() TODO
+            value = value.replace(/,/g, '","'); // eveliness? better JSON.parse() TODO
             newrev.push( '"' + $(this).attr( 'name' )  + '" : ["' + value + '"]');
             return newrev;
         });
 
-        var _id = $(thiscaller).parents('.sheet').find('._id').val() ; 
+        var _id = $(this).find('input._id').val();
 
         $.ajax({
             type: "PUT",
@@ -163,9 +157,11 @@ function safesheet(thiscaller) {
                     $(thiscaller).attr("class") == "picknrun"
                 ) location.reload(); 
                 
-                // TODO if not logged in
+                // TODO not logged in
             }
         });
+      return false;
+    });
 
 }
 
@@ -198,7 +194,7 @@ function autofiller(textarea) {
     lines = prose.split('\n');
 
     if (lines[1] ) { // ($(textarea).blur()) in function
-        dentline = lines[0];
+        dentline = lines[0]; //  TODO trim;
         $(textarea).parent().find('input[name="title"]').val(dentline);
 
         var autolemma = ""; // to define as string 
@@ -207,7 +203,7 @@ function autofiller(textarea) {
             autolemma =  autolemma + dentlinewords[i][0] ;
         }
 
-        $(textarea).parent().find('._id').val(ticketprefix + autolemma);
+        $(textarea).parent().find('._id').val(ticketprefix + autolemma);   // TODO idcheck
 
         // dentline last word is the prio and punct(uation)) !!eins111elf!!!
         var einself = dentline.replace(/.*\s(.*)$/g, '$1' ); 
