@@ -235,6 +235,13 @@ margin: -4px -11px 0 0;
 }
 
 
+
+.val2link {
+font-size: 150%;
+font-weight: bold;
+cursor: pointer;
+}
+
 .linker a {
 margin-right: 5px;
 }

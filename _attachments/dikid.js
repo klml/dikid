@@ -1,5 +1,6 @@
 $(document).ready(function() {
     preparesheet() ;
+    $('.array').after("<span class='val2link' >»</span>");
 });
 $("form input").click(function() {
     $(this).find('input').removeAttr('readonly');
@@ -29,7 +30,7 @@ $(".articledetailview span.show").click(function() {
  $( '.sheet' ).removeClass('collapsed');
  $(this).parent().removeClass('active') ;
 });
-$(".sheet .toggler").click(function() {
+$(".sheet span.toggler").click(function() {
  $(this).parent().toggleClass('collapsed') ;
 });
 
@@ -41,25 +42,7 @@ $(".picknrun").click(function() {
  safesheet( $(this) );
 });
 
-// linker TODO --> function ? value2link
-$('.linker > b').click(function() {
- $(this).next('b').toggle();
- var linkcontainer = $(this)  ;
 
- var parents = $(this).parentsUntil('.key_line').find('input').val()  ;  // TODO must with prev TODO
- parents = parents.split(",");  // this would be so nice with the couchsideeJSON array, but i dont have it
-
- $(parents).each(function(index, parent){
-  var a = $("<a />", { href: parent, html: parent });
-  $(linkcontainer).after(a) ;
- });
- $(this).toggle();
-});
-$('.linker > b + b').click(function() {
- $(this).toggle();
- $(this).parent().find('b').toggle();  //  less !!! TODO
- $(this).parent().find('a').remove();
-});
 
 function preparesheet() {
     $("form.newsheet textarea").keyup(function () {
@@ -122,7 +105,6 @@ function preparesheet() {
     });
 
 
-
     $('form').submit(function() {
 
         // json.org string
@@ -162,6 +144,54 @@ function preparesheet() {
         });
       return false;
     });
+
+
+
+$('.val2link').click(function() {
+ var input = $(this).prev('input') ;
+  
+ var elemnts = $(input).val();
+  elemnts = elemnts.split(",");  // this would be so nice with the couch-side JSON array, but i dont have it
+
+ 
+ var linkchain = "";
+ $(elemnts).each(function(index, parent){
+  var a = $("<a />", { href: parent, html: parent });
+  $(input).before(a) ;
+ });
+ $(this).before('<b>«</b>');
+ 
+ 
+ $(this).toggle();
+ $(input).toggle();
+});
+
+
+
+$('.linker > b').click(function() {
+ $(this).next('b').toggle();
+ var linkcontainer = $(this)  ;
+
+ var parents = $(this).parentsUntil('.key_line').find('input').val()  ;  // TODO must with prev TODO
+ parents = parents.split(",");  // this would be so nice with the couchsideeJSON array, but i dont have it
+
+ $(parents).each(function(index, parent){
+  var a = $("<a />", { href: parent, html: parent });
+  $(linkcontainer).after(a) ;
+ });
+ $(this).toggle();
+});
+$('.linker > b + b').click(function() {
+ $(this).toggle();
+ $(this).parent().find('b').toggle();  //  less !!! TODO
+ $(this).parent().find('a').remove();
+});
+
+
+
+
+
+
 
 }
 
