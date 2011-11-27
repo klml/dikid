@@ -179,7 +179,7 @@ background-color: white;
 }
 input.parents {
 background-color: white;
-    width: 240px;
+
 }
 input.prio,
 input.punct {
@@ -235,31 +235,27 @@ margin: -4px -11px 0 0;
 }
 
 
-
-.val2link {
-font-size: 150%;
-font-weight: bold;
-cursor: pointer;
-}
-
-.linker a {
+.val2link a {
 margin-right: 5px;
 }
-
-.linker > b + b {
+input[value=""] + span.val2link {
+display: none ;
+}
+.val2link em {
 display: none;
 }
-.linker b,
+.val2link b,
+.val2link em,
 .x {
 cursor: pointer;
 font-size: 18px;
-font-size: 18px;
+font-weight: bold;
 }
 
 
 
 
-textarea[name=markdown] 	{ width: 900px; height: 250px; line-height:21px; background-color: white; }
+textarea[name=markdown] 	{ height: 250px; line-height:21px; background-color: white; }
 
 .notion a[title="futon"] {
 border: 1px solid gray;

@@ -1,19 +1,19 @@
     <fieldset>
      <legend>Priorität <span>─</span> Punct <span>───</span> Duedate</legend>
-     <input type="text" class="prio autosafe string" name="prio" value="{{{prio}}}" readonly="readonly" autocomplete="off"/>
-     <input type="text" class="punct autosafe string" name="punct" value="{{{punct}}}" readonly="readonly" autocomplete="off"/> 
-     <input type="text" class="ddate autosafe string datepicker" name="duedate" value="{{{duedate}}}" readonly="readonly" autocomplete="off"/> 
+     <input type="text" class="prio autosafe string" name="prio" value="{{{prio}}}" autocomplete="off"/>
+     <input type="text" class="punct autosafe string" name="punct" value="{{{punct}}}" autocomplete="off"/> 
+     <input type="text" class="ddate autosafe string datepicker" name="duedate" value="{{{duedate}}}" autocomplete="off"/> 
     </fieldset>
     <fieldset>
      <legend>State <span>─────────────</span> Queues <span>────────────</span> Users</legend>
-     <input type="text" class="state autosafe string autocomplete" name="state" value="{{{state}}}" readonly="readonly" autocomplete="off" onFocus="this.select()" />
-     <input type="text" class="queues autosafe array autocomplete" name="queues" value="{{{queues}}}" readonly="readonly" autocomplete="off" onFocus="this.select()" />
-<!--
-     <span class="linker"><b>»</b><b>«</b></span>
--->
-     <input type="text" class="users autosafe array autocomplete" name="users" value="{{{users}}}"  autocomplete="off" onFocus="this.select()" />
+     <input type="text" class="state autosafe string autocomplete" name="state" value="{{{state}}}" autocomplete="off" onFocus="this.select()" />
+     <input type="text" class="queues autosafe array autocomplete" name="queues" value="{{{queues}}}" autocomplete="off" onFocus="this.select()" />
+     <span class='val2link' ><b>»</b><em>«</em></span>
+     <input type="text" class="users autosafe array autocomplete" name="users" value="{{{users}}}" autocomplete="off" onFocus="this.select()" />
+     <span class='val2link' ><b>»</b><em>«</em></span>
     </fieldset>
     <fieldset>
      <legend> Parents </legend>
      <input type="text" class="parents array" name="parents" value="{{parents}}" onFocus="this.select()" />
+     <span class='val2link' ><b>»</b><em>«</em></span>
     </fieldset>

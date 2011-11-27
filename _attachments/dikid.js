@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    preparesheet() ;
-    $('.array').after("<span class='val2link' >»</span>");
+    $('form.key_line button').hide('fast'); 
 });
 $("form input").click(function() {
-    $(this).find('input').removeAttr('readonly');
+    //$(this).find('input').removeAttr('readonly');
+    $(this).parents('form.key_line').find('button').show('fast');
     preparesheet() ;
 });
 $(".depot").click(function() { // the last class from calling element will fetched from #depot TODO lastone is not defined 
@@ -23,15 +23,35 @@ $(".new").click(function() {
 });
 
 $(".articledetailview span.hide").click(function() {
- $( '.sheet' ).addClass('collapsed');
+ $('.sheet').addClass('collapsed');
  $(this).parent().addClass('active') ;
 });
 $(".articledetailview span.show").click(function() {
- $( '.sheet' ).removeClass('collapsed');
+ $('.sheet').removeClass('collapsed');
  $(this).parent().removeClass('active') ;
 });
-$(".sheet span.toggler").click(function() {
+$(".sheet h1, .sheet h2, .sheet h3, .sheet h4, .sheet span.toggler").click(function() { // TODO h1 and more only at collapsed
  $(this).parent().toggleClass('collapsed') ;
+});
+$('.val2link b').click(function() {
+ var val2link = $(this).parent() ;
+ 
+ var elem = val2link.prev('input').val() ;
+ elem = elem.split(",");  // this would be so nice with the couch-side JSON array, but i dont have it
+  $(elem).each(function(index, parent) {
+   var a = $("<a />", { href: parent, html: parent });
+   $(val2link).find('em').before(a) ;
+  });
+
+ val2link.find('b, em').toggle();
+ val2link.prev('input').hide();
+});
+$('.val2link em').click(function() {
+ var val2link = $(this).parent() ;
+
+ val2link.find('a').remove();
+ val2link.find('b, em').toggle();
+ val2link.prev('input').show();
 });
 
 $(".picknrun").click(function() { 
@@ -51,7 +71,6 @@ function preparesheet() {
     $("form.newsheet input._id").change(function () {
         idcheck( $(this) ); 
     });
-
     $(".datepicker").datepicker({
         defaultDate: +7,
         dateFormat: 'yy-mm-dd',
@@ -66,7 +85,6 @@ function preparesheet() {
         currentText: '  Heute',
         showButtonPanel: true 
     });
-    
     $('input[name="prio"]').autocomplete(prios, {
         matchContains: true,
         minChars: 0,
@@ -74,7 +92,6 @@ function preparesheet() {
         scrollHeight: 280,
     });
     $('ul.selectable.puncts').append('<li>' + puncts.join("</li><li>") + '</li>');
-    
     $("ul.selectable.puncts").selectable( {
     selected: function(event, ui) { 
         $('form.key_line input[name="punct"]').val($("ul.selectable.puncts .ui-selected").text() ) ;
@@ -103,19 +120,17 @@ function preparesheet() {
         $(this).parents('.sheet').find('.depot').toggle();
         $(this).parent().remove();
     });
-
-
     $('form').submit(function() {
 
         // json.org string
         var newrev = new Array();
-        $(this).find('input.string').each(function(){ // .serializeArray() will not work, dont need GET but JSON values   TODO trim;
+        $(this).find('.string').each(function(){ // .serializeArray() will not work, dont need GET but JSON values   TODO trim;
           newrev.push( '"' + $(this).attr( 'name' ) + '" : "' + $(this).val() + '"');
           return newrev ;
         });
 
         // json.org array
-        $(this).find('input.array').each(function(){
+        $(this).find('.array').each(function(){
             var value = $(this).val() ;
             if ( value == 0 ) { return newrev; } ; // TODO come on
             value = value.replace(/,/g, '","'); // eveliness? better JSON.parse() TODO
@@ -132,69 +147,15 @@ function preparesheet() {
             success: function(msg){
                 var msgJSON = eval('(' + msg + ')'); 
                 $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
-                $("input").attr('readonly','readonly');
-                $("form.keyline .submit").hide('slow'); // shows "untouched"
-                if ( 
-                    $(thiscaller).parent().attr("class") == "sheet newsheet" ||
-                    $(thiscaller).attr("class") == "picknrun"
-                ) location.reload(); 
-                
+                //~ $("input").attr('readonly','readonly'); // doesnt work 
+                $("form.key_line button").hide('slow'); // shows "untouched"
+                if ( $(this).attr("class") == "newsheet" ) location.reload();  // TODO target
                 // TODO not logged in
             }
         });
       return false;
     });
-
-
-
-$('.val2link').click(function() {
- var input = $(this).prev('input') ;
-  
- var elemnts = $(input).val();
-  elemnts = elemnts.split(",");  // this would be so nice with the couch-side JSON array, but i dont have it
-
- 
- var linkchain = "";
- $(elemnts).each(function(index, parent){
-  var a = $("<a />", { href: parent, html: parent });
-  $(input).before(a) ;
- });
- $(this).before('<b>«</b>');
- 
- 
- $(this).toggle();
- $(input).toggle();
-});
-
-
-
-$('.linker > b').click(function() {
- $(this).next('b').toggle();
- var linkcontainer = $(this)  ;
-
- var parents = $(this).parentsUntil('.key_line').find('input').val()  ;  // TODO must with prev TODO
- parents = parents.split(",");  // this would be so nice with the couchsideeJSON array, but i dont have it
-
- $(parents).each(function(index, parent){
-  var a = $("<a />", { href: parent, html: parent });
-  $(linkcontainer).after(a) ;
- });
- $(this).toggle();
-});
-$('.linker > b + b').click(function() {
- $(this).toggle();
- $(this).parent().find('b').toggle();  //  less !!! TODO
- $(this).parent().find('a').remove();
-});
-
-
-
-
-
-
-
 }
-
 function idcheck(checkfield) {
     var checkid = $(checkfield).val();
 

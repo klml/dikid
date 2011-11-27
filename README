@@ -1,3 +1,10 @@
-dikid is a draft for a Issue_tracking_system written, a wiki using cuchapp with CouchDB. cocuapp, like a wiki, is IMHO a very good implementation for the Document-oriented database system of CouchDB. It shows the user documents as pages and lets you create and change them. And of course CouchApp is elementary and plain (no extra webserver, no extra script just JS) 
+dikid is a draft for a Issue_tracking_system written using couchapp with CouchDB (no extra webserver, no extra script). 
 
-http://umija.org/dev:wicketticket
+It shows the user sheets like pieces of paper, and bunches of sheets (for relationships )
+
+And lets you create and change them.
+
+There are no comments, just create a new sheet as followup.
+To create a new sheet just input some text, like an email.
+
+more http://umija.org/dev:wicketticket
