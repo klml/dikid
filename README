@@ -1,11 +1,9 @@
-dikid is a draft for a Issue_tracking_system written using couchapp with CouchDB (no extra webserver, no extra script). 
+dikid is a draft for a Issue_tracking_system written using couchapp with CouchDB (no extra webserver, no extra serverscript). 
 
-It shows the user sheets like pieces of paper, and bunches of sheets (for relationships )
+Its based on 'sheets' like pieces of paper, and 'bunches' of these sheets for relationships (like queues, users, projects, parents and childs etc)
 
-And lets you create and change them.
-
-There are no comments, just create a new sheet as followup.
-To create a new sheet just input some text, like an email.
+There are no comments, just create a new sheet as followup-sheet.
+To create a new sheet, just input some text, like an email.
 
 the first buggy demo on https://klml.cloudant.com/dikid/_design/dikid/_rewrite/bunch/alltickets
 
