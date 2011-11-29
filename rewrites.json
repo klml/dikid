@@ -4,12 +4,8 @@
     "to" : "_show/redirect"
   },
   {
-    "from" : "js/*",
-    "to" : "js/*"
-  },
-  {
-    "from" : "style/*",
-    "to" : "style/*"
+    "from" : "att/*",
+    "to" : "att/*"
   },
   {
     "from" : "images/*",
