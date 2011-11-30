@@ -17,7 +17,7 @@ $(".followup").click(function() { // TODO together with $(".depot").click ?
     initdate( $(this).attr("rel") ) ; // TODO initdat wird ert coy udn dann gesetzt ;(
     preparesheet() ;
 });
-$(".new").click(function() {
+$(".newbunch").click(function() {
     initdate( $(this).attr("rel") ) ;
     preparesheet() ;
 });
@@ -59,7 +59,7 @@ $(".picknrun").click(function() {
  var value = $(this).attr("name") ;
 
  $(this).parent().find('input.' + target).val( value );
- safesheet( $(this) );
+ submit( $(this).parent() ) ; 
 });
 
 
@@ -117,45 +117,51 @@ function preparesheet() {
     });
     $('textarea').focus(); // TODO
     $('.x').click(function() {
-        $(this).parents('.sheet').find('.depot').toggle();
+        $(this).parents('.sheet, .headnew').find('.depot').toggle();
         $(this).parent().remove();
     });
     $('form').submit(function() {
-
-        // json.org string
-        var newrev = new Array();
-        $(this).find('.string').each(function(){ // .serializeArray() will not work, dont need GET but JSON values   TODO trim;
-          newrev.push( '"' + $(this).attr( 'name' ) + '" : "' + $(this).val() + '"');
-          return newrev ;
-        });
-
-        // json.org array
-        $(this).find('.array').each(function(){
-            var value = $(this).val() ;
-            if ( value == 0 ) { return newrev; } ; // TODO come on
-            value = value.replace(/,/g, '","'); // eveliness? better JSON.parse() TODO
-            newrev.push( '"' + $(this).attr( 'name' )  + '" : ["' + value + '"]');
-            return newrev;
-        });
-
-        var _id = $(this).find('input._id').val();
-
-        $.ajax({
-            type: "PUT",
-            url: "../../../../" + _id , //< TODO URL
-            data: '{' + newrev + '}' ,
-            success: function(msg){
-                var msgJSON = eval('(' + msg + ')'); 
-                $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
-                //~ $("input").attr('readonly','readonly'); // doesnt work 
-                $("form.key_line button").hide('slow'); // shows "untouched"
-                if ( $(this).attr("class") == "newsheet" ) location.reload();  // TODO target
-                // TODO not logged in
-            }
-        });
-      return false;
+        submit(this) ;
     });
 }
+function submit(form) {
+    // json.org string
+    var newrev = new Array();
+    $(form).find('.string').each(function(){ // .serializeArray() will not work, dont need GET but JSON values   TODO trim;
+      newrev.push( '"' + $(this).attr( 'name' ) + '" : "' + $(this).val() + '"');
+      return newrev ;
+    });
+
+    // json.org array
+    $(form).find('.array').each(function(){
+        var value = $(this).val() ;
+        if ( value == 0 ) { return newrev; } ; // TODO come on
+        value = value.replace(/,/g, '","'); // eveliness? better JSON.parse() TODO
+        newrev.push( '"' + $(this).attr( 'name' )  + '" : ["' + value + '"]');
+        return newrev;
+    });
+
+    var _id = $(form).find('input._id').val();
+
+    $.ajax({
+        type: "PUT",
+        url: "../../../../" + _id , //< TODO URL
+        data: '{' + newrev + '}' ,
+        success: function(msg){
+            var msgJSON = eval('(' + msg + ')'); 
+            $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
+            //~ $("input").attr('readonly','readonly'); // doesnt work 
+            $("form.key_line button").hide('slow'); // shows "untouched"
+            alert ( $(form).attr("class")) ;  // TODO target
+            //~ if ( $(form).attr("class") == "newsheet" ) location.reload();  // TODO target
+            // TODO not logged in
+        }
+    });
+  return false;
+}
+
+
+
 function idcheck(checkfield) {
     var checkid = $(checkfield).val();
 
@@ -200,13 +206,12 @@ function autofiller(textarea) {
         var einself = dentline.replace(/.*\s(.*)$/g, '$1' ); 
 
         var prio = einself.match(/\!/g) ; // count of ! is the prio
-        var priolength = "" ;
-        if (prio) { priolength = prio.length };
-        $(textarea).parent().find('input[name="prio"]').val(priolength);
+        if (prio) { 
+                $(textarea).parent().find('input[name="prio"]').val(prio.length);
+        };
 
         var punct = new Array( einself.match(/\?/) , einself.match(/fyi/i) , einself.match(/idee/i) ) ;  // TODO das muss auf glob puncts gehen
-        var puncts = punct.join("") ;
-        $(textarea).parent().find('input[name="punct"]').val(puncts);
+        $(textarea).parent().find('input[name="punct"]').val( punct.join("") );
 
         user = prose.match(/@.*?\s/g) ; // TODO remove @ TODo dont use witout leading space
         if (user) var users = user.join(",") ;

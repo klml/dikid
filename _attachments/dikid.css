@@ -68,7 +68,7 @@ background-color: #00263f;
 #header,
 .notion input {
 color: white;
-border: 0 solid white;
+border: 1px solid white;
 }
 #header {
 padding:15px;
@@ -79,14 +79,33 @@ padding: 0 15px 5px 15px;
 }
 form.newsheet,
 .sheet {
-background-color: white;
-margin: 10px 0 10px 40px;
+margin: 10px 0 10px 0;
 padding: 1px 10px;
 border: 1px solid #E5E5E5;
 max-width: 980px;
 }
+.sheet {
+background-color: white;
+}
+.sheet:hover {
+background-color: #FFE4E1;
+}
+.sheet:hover .picknrun.archive {
+color: red;
+display: inline;
+cursor: pointer;
+}
+.picknrun.archive {
+display: none;
+}
+
+form.newsheet {
+background-color: #0071bb;
+}
+
+
 #header .login,
-#header ~ span.newsheet,
+.headnew .depot,
 .x,
 .picknrun.archive {
 float: right;
@@ -252,7 +271,6 @@ cursor: pointer;
 font-size: 18px;
 font-weight: bold;
 }
-
 
 
 
