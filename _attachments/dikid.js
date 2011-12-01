@@ -150,10 +150,10 @@ function submit(form) {
         success: function(msg){
             var msgJSON = eval('(' + msg + ')'); 
             $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
-            //~ $("input").attr('readonly','readonly'); // doesnt work 
             $("form.key_line button").hide('slow'); // shows "untouched"
-            alert ( $(form).attr("class")) ;  // TODO target
-            //~ if ( $(form).attr("class") == "newsheet" ) location.reload();  // TODO target
+            if ( $('#' + _id + " input[name='state']").val() == 'archive' ) $('#' + _id ).remove() ;
+            if ( msgJSON.rev[0] + msgJSON.rev[1] == '1-' ) location.reload();  // newsheet
+
             // TODO not logged in
         }
     });
