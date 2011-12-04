@@ -14,9 +14,9 @@
   <ul class="menu">
    <li>all open tickets: <a href="../list/alltickets">listed</a> <a href="../bunch/alltickets">bunched</a></li>
    <li><a href="../register/queues/"></a></li>
-   <form action="../" method="get"> <!-- TODO -->
+   <form action="queue/" method="get">
         <fieldset>
-         <legend>queues</legend>
+         <legend>queue</legend>
          <input type="text" class="queues autocomplete" name="queues" value="{{{thisqueues}}}" autocomplete="off" onFocus="this.select()" />
         </fieldset>
         <fieldset>
@@ -27,14 +27,12 @@
          <legend>users</legend>
          <input type="text" class="users autocomplete" name="users" value="{{{thisusers}}}" autocomplete="off" onFocus="this.select()" />
         </fieldset>
-<!--
         <button>send</button>
--->
    </form>
   </ul>
  </div>
- <div class="headnew">
-  <span class="depot newbunch newsheet" rel="header" >new sheet</span>
+ <div id="headnew">
+  <span class="depot newbunch newsheet" rel="headnew" >new sheet</span>
  </div>
  <span class="articledetailview" >
   <span class="hide" ></span>

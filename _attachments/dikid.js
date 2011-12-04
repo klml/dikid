@@ -1,24 +1,27 @@
 $(document).ready(function() {
-    $('form.key_line button').hide('fast'); 
+    $('form.key_line button').hide('fast'); // TODO direct in css?
 });
-$("form input").click(function() {
-    //$(this).find('input').removeAttr('readonly');
-    $(this).parents('form.key_line').find('button').show('fast');
-    preparesheet() ;
-});
+
 $(".depot").click(function() { // the last class from calling element will fetched from #depot TODO lastone is not defined 
     var lastclass = $(this).attr("class").split(" ").pop() ;
     var depot = $("#depot ." + lastclass).html();
     $(this).after(depot);
     $(this).toggle();
 });
-$(".followup").click(function() { // TODO together with $(".depot").click ?
-    keycopy( $(this).attr("rel") ); // TODO this and parnets
-    initdate( $(this).attr("rel") ) ; // TODO initdat wird ert coy udn dann gesetzt ;(
+$(".newbunch").click(function() {
+    preparesheet() ;
+    initdate( $(this).attr("rel") ) ;
+});
+$(".followup").click(function() {
+    var _id = $(this).parents('.sheet').attr('id') ;
+    keycopy( _id ); 
+    initdate( _id ) ; // TODO initdat wird erst kopiert und dann überschrieben ;(
     preparesheet() ;
 });
-$(".newbunch").click(function() {
-    initdate( $(this).attr("rel") ) ;
+
+$("form input").click(function() {
+    //$(this).find('input').removeAttr('readonly');
+    $(this).parents('form.key_line').find('button').show('fast');
     preparesheet() ;
 });
 
@@ -53,7 +56,6 @@ $('.val2link em').click(function() {
  val2link.find('b, em').toggle();
  val2link.prev('input').show();
 });
-
 $(".picknrun").click(function() { 
  var target = $(this).attr("rel") ;
  var value = $(this).attr("name") ;
@@ -61,9 +63,6 @@ $(".picknrun").click(function() {
  $(this).parent().find('input.' + target).val( value );
  submit( $(this).parent() ) ; 
 });
-
-
-
 function preparesheet() {
     $("form.newsheet textarea").keyup(function () {
         autofiller( $(this) );
@@ -117,7 +116,7 @@ function preparesheet() {
     });
     $('textarea').focus(); // TODO
     $('.x').click(function() {
-        $(this).parents('.sheet, .headnew').find('.depot').toggle();
+        $(this).parents('.sheet, #headnew').find('.depot').toggle();
         $(this).parent().remove();
     });
     $('form').submit(function() {
@@ -159,9 +158,6 @@ function submit(form) {
     });
   return false;
 }
-
-
-
 function idcheck(checkfield) {
     var checkid = $(checkfield).val();
 
@@ -184,7 +180,6 @@ function idcheck(checkfield) {
         }
     });
 };
-
 function autofiller(textarea) {
     var prose = $(textarea).val();
 
@@ -220,25 +215,18 @@ function autofiller(textarea) {
 
    }
 };
-
 function keycopy(_id) { // TODO _id raus und this  parent() closest() und find() ?
     $('#' + _id + ' .newsheet input').each(function(){
       $(this).val( $('#' + _id + ' .key_line input[name=' + $(this).attr("name") + ']').val() ); // TDOD evtl doch per class und nicht per name?
     });
+    
+    $('#' + _id + ' .newsheet input.parents' ).val( function(i, val)  { // TODO more parent
+    if ( val != "" ) return _id + "," + val ;
+    return _id ;
+    }) ;
 
-    // append for value? TODO
-    var parents = $('#' + _id + ' .newsheet input.parents' ).val();
-    if (parents == "") {
-        parents = _id ; 
-    } else {
-        parents = _id + ',' + parents ;         // TODO
-        //~ parents = parents.split(",");       // better?
-        //~ parents = $.merge([_id], parents);
-        //~ parents = parents.join(",");
-
-    };
-    $('#' + _id + ' .newsheet input.parents' ).val(parents);
-};  
+    
+};
 function initdate(_id) {
     $('#' + _id + ' .newsheet input[name=initdate]' ).val( new Date().getTime() );
 };  

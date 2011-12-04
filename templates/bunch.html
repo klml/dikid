@@ -15,14 +15,14 @@
       <input type="hidden" class="type string" name="type" value="{{{type}}}" />
       <input type="hidden" class="title string" name="title" value="{{{title}}}" />
       <input type="hidden" class="markdown string" name="markdown" value="{{{markdown}}}" />
-      <input type="hiddenq" class="initdate string" name="initdate" value="{{{initdate}}}" />
+      <input type="hidden" class="initdate string" name="initdate" value="{{{initdate}}}" />
       {{>key_line}}
       <button type="submit" >Safe</button>
      </form>
      <p class="description">{{markdown}}</p><!-- TODO markdown -->
      <span class="picknrun archive" rel="state" name="archive">✖ archive this</span>
 
-     <span class="followup depot newsheet" rel="{{_id}}" >followup</span>
+     <span class="followup depot newsheet" >followup</span>
     </div>
    </div>
   {{/tickets}}  

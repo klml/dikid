@@ -46,11 +46,17 @@
      "limit" : 100 
     }
    },
+  { "from" : "/queue",
+    "to" : "_list/bunch/queues",
+    "query" : {
+      "ascending" : true
+    }
+  },
   { "from" : "/queue/:title",
-    "to" : "_list/queues/staplez",
+    "to" : "_list/queues/queues",
     "query" : {
      "startkey" : [":title"],
-     "endkey" : [":title"],
+     "endkey" : [":title",{}],
      "limit" : 100 
     }
    }
