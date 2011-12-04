@@ -8,8 +8,7 @@ function(doc) {
             for ( distance in doc.parents ) {
                 if ( doc.parents[parentarm] == doc.parents[distance] ) doc.hierarchy = distance * 1 + 2
             };
-            doc.parentsstring = doc.parents + "," + doc._id ;
-            emit([doc.parents[parentarm], doc.parentsstring, doc.initdate], doc);
+            emit([doc.parents[parentarm], doc.parents + "," + doc._id , doc.initdate], doc);
         }
     }
 };
