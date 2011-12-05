@@ -24,6 +24,18 @@ $("form input").click(function() {
     $(this).parents('form.key_line').find('button').show('fast');
     preparesheet() ;
 });
+$("#header form input").change(function() {
+    var tag = $(this).prev('legend').html() ;
+    var target = $(this).val() ;
+    location.href= '../' + tag + '/' + target 
+});
+$("#header form button").click(function() {
+    //~ $(this).attr('disabled', 'disabled');
+    var tag = $(this).prev('input').prev('legend').html() ;
+    var target = $(this).prev('input').val() ;
+    location.href= '../' + tag + '/' + target  ;
+  return false;
+}); // TODO #header form on enter
 
 $(".articledetailview span.hide").click(function() {
  $('.sheet').addClass('collapsed');
@@ -38,11 +50,23 @@ $(".sheet h1, .sheet h2, .sheet h3, .sheet h4, .sheet span.toggler").click(funct
 });
 $('.val2link b').click(function() {
  var val2link = $(this).parent() ;
- 
+ var tag = val2link.prev('input').attr('name') ;
+ switch (tag) { // TODO move to configJSON
+     case 'parents' :
+     tag = 'bunch'
+     break;
+     case 'users' :
+     tag =  'user'
+     break;
+     case 'queues' :
+     tag = 'queue'
+     break;
+ }
  var elem = val2link.prev('input').val() ;
  elem = elem.split(",");  // this would be so nice with the couch-side JSON array, but i dont have it
-  $(elem).each(function(index, parent) {
-   var a = $("<a />", { href: parent, html: parent });
+ 
+  $(elem).each(function(i, target) {
+   var a = $("<a />", { href: '../' + tag + '/' + target, html: target });
    $(val2link).find('em').before(a) ;
   });
 
@@ -219,13 +243,10 @@ function keycopy(_id) { // TODO _id raus und this  parent() closest() und find()
     $('#' + _id + ' .newsheet input').each(function(){
       $(this).val( $('#' + _id + ' .key_line input[name=' + $(this).attr("name") + ']').val() ); // TDOD evtl doch per class und nicht per name?
     });
-    
     $('#' + _id + ' .newsheet input.parents' ).val( function(i, val)  { // TODO more parent
     if ( val != "" ) return _id + "," + val ;
     return _id ;
     }) ;
-
-    
 };
 function initdate(_id) {
     $('#' + _id + ' .newsheet input[name=initdate]' ).val( new Date().getTime() );
@@ -255,8 +276,6 @@ keys = new Array (
 "user" ,
 "ddate"
 )
-
-
 
 types  = new Array ( "wiki", "ticket", "adr", "ressource");
 prios  = new Array ( "Alerta", "hour", "day", "week", "kuer");

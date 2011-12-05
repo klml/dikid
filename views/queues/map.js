@@ -4,4 +4,4 @@ function(doc) {
         emit([doc.queues[queue]], doc);
     }
   }
-};
+}

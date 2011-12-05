@@ -56,7 +56,9 @@ legend span {
 color:#E5E5E5;
 }
 button {
-margin: 5px;
+line-height: 10px;
+margin: 0;
+padding: 0 7px;
 }
 
 /*color artyfarty*/

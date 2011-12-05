@@ -30,7 +30,7 @@
     }
   },
   { "from" : "/list/:title",
-    "to" : "_list/list/staplez",
+    "to" : "_list/list/childs",
     "query" : { 
      "startkey" : ":title",
      "endkey" : ":title",
@@ -39,7 +39,24 @@
     }
    },
   { "from" : "/bunch/:title",
-    "to" : "_list/bunch/staplez",
+    "to" : "_list/bunch/childs",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100,
+     "ascending" : true
+    }
+   },
+  { "from" : "/date/:title",
+    "to" : "_list/bunch/dates",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/prio/:title",
+    "to" : "_list/bunch/prio",
     "query" : {
      "startkey" : [":title"],
      "endkey" : [":title",{}],
@@ -48,12 +65,34 @@
    },
   { "from" : "/queue",
     "to" : "_list/bunch/queues",
-    "query" : {
-      "ascending" : true
-    }
+    "query" : { "ascending" : true }
   },
   { "from" : "/queue/:title",
-    "to" : "_list/queues/queues",
+    "to" : "_list/bunch/queues",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/state/",
+    "to" : "_list/bunch/state",
+    "query" : { "ascending" : true }
+   },
+  { "from" : "/state/:title",
+    "to" : "_list/bunch/state",
+    "query" : {
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/user/",
+    "to" : "_list/bunch/users",
+    "query" : { "ascending" : true }
+   },
+  { "from" : "/user/:title",
+    "to" : "_list/bunch/users",
     "query" : {
      "startkey" : [":title"],
      "endkey" : [":title",{}],
