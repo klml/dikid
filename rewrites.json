@@ -19,6 +19,7 @@
     "from" : "/list/alltickets",
     "to" : "_list/list/all-tickets",
     "query" : {
+      "include_docs" : true ,
       "ascending" : true
     }
   },
@@ -26,14 +27,15 @@
     "from" : "/bunch/alltickets",
     "to" : "_list/bunch/all-tickets",
     "query" : {
+      "include_docs" : true ,
       "ascending" : true
-
     },
-          "include_docs" : true
+
   },
   { "from" : "/list/:title",
     "to" : "_list/list/childs",
     "query" : { 
+     "include_docs" : true ,
      "startkey" : ":title",
      "endkey" : ":title",
      "ascending" : true,
@@ -46,12 +48,13 @@
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100,
-     "ascending" : true
+     "include_docs" : true
     }
    },
   { "from" : "/date/:title",
     "to" : "_list/bunch/dates",
     "query" : {
+     "include_docs" : true ,
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100 
@@ -60,6 +63,7 @@
   { "from" : "/prio/:title",
     "to" : "_list/bunch/prio",
     "query" : {
+     "include_docs" : true ,
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100 
@@ -72,10 +76,10 @@
   { "from" : "/queue/:title",
     "to" : "_list/bunch/queues",
     "query" : {
+     "include_docs" : true ,
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100 ,
-     "include_docs" : true
     }
    },
   { "from" : "/state/",
@@ -85,6 +89,7 @@
   { "from" : "/state/:title",
     "to" : "_list/bunch/state",
     "query" : {
+     "include_docs" : true ,
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100 
@@ -92,11 +97,13 @@
    },
   { "from" : "/user/",
     "to" : "_list/bunch/users",
-    "query" : { "ascending" : true }
+    "query" : { "ascending" : false }
+    
    },
   { "from" : "/user/:title",
     "to" : "_list/bunch/users",
     "query" : {
+     "include_docs" : true ,
      "startkey" : [":title"],
      "endkey" : [":title",{}],
      "limit" : 100 

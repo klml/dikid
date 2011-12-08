@@ -1,5 +1,5 @@
 function(doc) {
-  if (doc.state && doc.state != 'archive' ) {
+  if (doc.state) {
         emit([doc.state], doc);
     }
 }

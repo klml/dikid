@@ -82,11 +82,15 @@ $('.val2link em').click(function() {
 });
 $(".picknrun").click(function() { 
  var target = $(this).attr("rel") ;
- var value = $(this).attr("name") ;
+ var value = $(this).html() ;
+ if ( $(this).attr("name") ) value = $(this).attr("name") ;
 
  $(this).parent().find('input.' + target).val( value );
  submit( $(this).parent() ) ; 
 });
+
+
+
 function preparesheet() {
     $("form.newsheet textarea").keyup(function () {
         autofiller( $(this) );
@@ -168,18 +172,17 @@ function submit(form) {
 
     $.ajax({
         type: "PUT",
-        url: "../../../../" + _id , //< TODO URL
+        url: "../../../../" + _id , //< TODO URL /{{db.name}}/
         data: '{' + newrev + '}' ,
         success: function(msg){
             var msgJSON = eval('(' + msg + ')'); 
             $('#' + _id + " input[name='_rev']").val(msgJSON.rev); // new rev id for next safe
-            $("form.key_line button").hide('slow'); // shows "untouched"
+            $("form.key_line button").hide('slow');
             if ( $('#' + _id + " input[name='state']").val() == 'archive' ) $('#' + _id ).remove() ;
             if ( msgJSON.rev[0] + msgJSON.rev[1] == '1-' ) location.reload();  // newsheet
-
             // TODO not logged in
         }
-    });
+      });
   return false;
 }
 function idcheck(checkfield) {
@@ -244,8 +247,8 @@ function keycopy(_id) { // TODO _id raus und this  parent() closest() und find()
       $(this).val( $('#' + _id + ' .key_line input[name=' + $(this).attr("name") + ']').val() ); // TDOD evtl doch per class und nicht per name?
     });
     $('#' + _id + ' .newsheet input.parents' ).val( function(i, val)  { // TODO more parent
-    if ( val != "" ) return _id + "," + val ;
-    return _id ;
+        if ( val != "" ) return val + "," + _id ;
+        return _id ;
     }) ;
 };
 function initdate(_id) {

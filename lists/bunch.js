@@ -7,7 +7,7 @@ function() {
       site_title : this.couchapp.name,
       tickets : []
     };
-
+        
   provides("html", function() {
     while (row = getRow()) {
       log(row);
