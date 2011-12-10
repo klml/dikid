@@ -24,11 +24,7 @@ $("form input").click(function() {
     $(this).parents('form.key_line').find('button').show('fast');
     preparesheet() ;
 });
-$("#header form input").change(function() {
-    var tag = $(this).prev('legend').html() ;
-    var target = $(this).val() ;
-    location.href= '../' + tag + '/' + target 
-});
+
 $("#header form button").click(function() {
     //~ $(this).attr('disabled', 'disabled');
     var tag = $(this).prev('input').prev('legend').html() ;
@@ -36,6 +32,7 @@ $("#header form button").click(function() {
     location.href= '../' + tag + '/' + target  ;
   return false;
 }); // TODO #header form on enter
+
 
 $(".articledetailview span.hide").click(function() {
  $('.sheet').addClass('collapsed');
@@ -48,6 +45,13 @@ $(".articledetailview span.show").click(function() {
 $(".sheet h1, .sheet h2, .sheet h3, .sheet h4, .sheet span.toggler").click(function() { // TODO h1 and more only at collapsed
  $(this).parent().toggleClass('collapsed') ;
 });
+
+$("#header form input").change(function() {
+    var tag = $(this).prev('legend').html() ;
+    var target = $(this).val() ;
+    if ( target != "" ) $('.' + tag + '_' + target ).removeClass('collapsed');
+});
+
 $('.val2link b').click(function() {
  var val2link = $(this).parent() ;
  var tag = val2link.prev('input').attr('name') ;

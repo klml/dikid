@@ -11,5 +11,6 @@ function(doc) {
             };
             emit([_doc.parents[parentarm], _doc.parents + "," + _doc._id + "," + _doc.hierarchy + "," + _doc.initdate ], _doc); // whats better
         }
+        }
     }
 }

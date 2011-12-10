@@ -17,13 +17,28 @@
 -->
    <form action="queue/" method="get" >
         <fieldset>
-         <legend>queue</legend>
-         <input type="text" class="queues autocomplete" name="queues" value="{{{thisqueues}}}" autocomplete="off" onFocus="this.select()" />
+         <legend>prio</legend>
+         <input type="text" class="prio autocomplete" name="prio" value="{{{thisprio}}}" autocomplete="off" onFocus="this.select()" />
+         <button type="submit" >⚑</button>
+        </fieldset>
+        <fieldset>
+         <legend>punct</legend>
+         <input type="text" class="punct autocomplete" name="punct" value="{{{thispunct}}}" autocomplete="off" onFocus="this.select()" />
+         <button type="submit" >⚑</button>
+        </fieldset>
+        <fieldset>
+         <legend>duedate</legend>
+         <input type="text" class="duedate" name="duedate" value="{{{thisduedate}}}" autocomplete="off" onFocus="this.select()" />
          <button type="submit" >⚑</button>
         </fieldset>
         <fieldset>
          <legend>state</legend>
          <input type="text" class="state autocomplete" name="state" value="{{{thisstate}}}" autocomplete="off" onFocus="this.select()" />
+         <button type="submit" >⚑</button>
+        </fieldset>
+        <fieldset>
+         <legend>queue</legend>
+         <input type="text" class="queues autocomplete" name="queues" value="{{{thisqueues}}}" autocomplete="off" onFocus="this.select()" />
          <button type="submit" >⚑</button>
         </fieldset>
         <fieldset>

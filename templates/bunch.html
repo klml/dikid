@@ -6,7 +6,7 @@
 -->
 
   {{#tickets}}
-   <div id="{{_id}}" class="sheet prio_{{{prio}}} state_{{{state}}} parent_{{hierarchy}}" >
+   <div id="{{_id}}" class="sheet prio_{{{prio}}} punct_{{{punct}}} duedate_{{{duedate}}} state_{{{state}}} queue_{{{queues}}} user_{{{users}}} parent_{{hierarchy}}" ><!-- TODO array -->
     {{>id_line}}
     <h{{hierarchy}}>{{title}}</h{{hierarchy}}>
     <div>
