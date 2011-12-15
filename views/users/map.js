@@ -1,5 +1,5 @@
 function(doc) {
-  if ( doc.state != 'archive' ) {
+  if (doc.users && doc.state != 'archive' ) {
      for (user in doc.users ) {
         emit([doc.users[user]], doc);
     }

@@ -60,8 +60,38 @@
      "limit" : 100 
     }
    },
+  { "from" : "/prio",
+    "to" : "_list/bunch/prio",
+    "query" : { "ascending" : true }
+  },
   { "from" : "/prio/:title",
     "to" : "_list/bunch/prio",
+    "query" : {
+     "include_docs" : true ,
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/punct",
+    "to" : "_list/bunch/punct",
+    "query" : { "ascending" : true }
+  },
+  { "from" : "/punct/:title",
+    "to" : "_list/bunch/punct",
+    "query" : {
+     "include_docs" : true ,
+     "startkey" : [":title"],
+     "endkey" : [":title",{}],
+     "limit" : 100 
+    }
+   },
+  { "from" : "/duedate",
+    "to" : "_list/bunch/duedate",
+    "query" : { "ascending" : true }
+  },
+  { "from" : "/duedate/:title",
+    "to" : "_list/bunch/duedate",
     "query" : {
      "include_docs" : true ,
      "startkey" : [":title"],
